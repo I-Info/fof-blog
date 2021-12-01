@@ -1,30 +1,38 @@
 <?php
 require_once "../functions.php";
-require_once "../config.php";
 
 debug();
 global $ADMIN;
 
-$json_data = file_get_contents("php://input");
-$data = json_decode($json_data);
+$data = parse_json();
 
-if (!(isset($data->user) && isset($data->passwd))) {
-    die(statusBadRequest());
+if (!(isset($data->username) && isset($data->passwd))) {
+    die(status_bad_request());
 }
 
 session_start();
-
+// already logged in
 if (isset($_SESSION['uid'])) {
-    if ($_SESSION['uid'] == $ADMIN['uid']) {
-        exit(statusFound("admin"));
-    } else {
-        exit(statusFound("user"));
-    }
+    exit(status_found($_SESSION['uid']));
 }
 
-
-if ($data->user == $ADMIN['uid'] && $data->passwd == $ADMIN['passwd']) {
+// administrator auth
+if ($data->username == $ADMIN['username'] && $data->passwd == $ADMIN['passwd']) {
     $_SESSION['uid'] = "admin";
-    exit(statusOK());
-} else
-    exit(statusForbidden());
+    exit(status_ok());
+} else {
+    // basic user auth
+    $conn = mysql_connect();
+    $stmt = $conn->prepare("SELECT `uid` FROM `users` WHERE `name` = ? AND `passwd` = ?");
+    $stmt->bind_param("ss", $name, $passwd);
+    $name = $data->username;
+    $passwd = md5($data->passwd);
+    if (!$stmt->execute())
+        die(status_server_error());
+    $result = $stmt->get_result();
+    if ($result && $row = $result->fetch_assoc()) {
+        $_SESSION['uid'] = $row['uid'];
+        exit(status_ok());
+    }
+    exit(status_forbidden());
+}
