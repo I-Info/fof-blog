@@ -27,7 +27,7 @@ if (strlen($passwd) < 5 || strlen($passwd) > 25)
     die(http_bad_request("invalid password"));
 if (!filter_var($email, FILTER_VALIDATE_EMAIL))
     die(http_bad_request("invalid email"));
-if (!preg_match("/^1[3|4|5|8][0-9]\d{8}$/", $tel))
+if (!preg_match("/^1[34578][0-9]\d{8}$/", $tel))
     die(http_bad_request("invalid tel"));
 
 $conn = db_connect();
