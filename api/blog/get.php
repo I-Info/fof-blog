@@ -1,6 +1,9 @@
 <?php
 require_once "../functions.php";
 
+debug();
+header('Content-type: application/json');
+
 $uid = check_log_status();
 if ($uid === false)
     die(http_unauthorized());
@@ -36,7 +39,7 @@ if (isset($data->blog_id)) {
     $uid = $data->uid >= 0 ? (int)$data->uid : $_SESSION['uid'];
 
     $conn = db_connect();
-    $stmt = $conn->prepare("SELECT `id`, `content`, `uid`, `likes`, `create_time`, `update_time` FROM `blogs` WHERE `uid` = ? LIMIT ? OFFSET ?;");
+    $stmt = $conn->prepare("SELECT * FROM `blogs` WHERE `uid` = ? ORDER BY `id` DESC LIMIT ? OFFSET ?;");
     if ($stmt === false)
         die(http_server_error());
     $stmt->bind_param("iii", $uid, $limit, $page);
@@ -53,7 +56,18 @@ if (isset($data->blog_id)) {
     }
 } else {
     // homepage
-    exit();
-
+    $conn = db_connect();
+    $stmt = $conn->prepare("SELECT * FROM `blogs` ORDER BY `id` DESC LIMIT ? OFFSET ?;");
+    $stmt->bind_param("ii", $limit, $page);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        $r = array();
+        foreach ($result as $row)
+            array_push($r, $row);
+        exit(http_ok("ok", $r));
+    } else {
+        die(http_not_found());
+    }
 }
 

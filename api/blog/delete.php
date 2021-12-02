@@ -1,6 +1,8 @@
 <?php
-
 require_once "../functions.php";
+
+debug();
+header('Content-type: application/json');
 
 $uid = check_log_status();
 if ($uid === false)

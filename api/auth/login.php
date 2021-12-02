@@ -2,6 +2,7 @@
 require_once "../functions.php";
 
 debug();
+header('Content-type: application/json');
 global $ADMIN;
 
 $data = parse_json();

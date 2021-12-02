@@ -2,6 +2,7 @@
 require_once "../functions.php";
 
 debug();
+header('Content-type: application/json');
 
 global $ADMIN;
 
@@ -38,7 +39,7 @@ try {
     if (!$stmt->execute())
         die(http_bad_request());
     exit(http_ok());
-} catch (\mysqli_sql_exception $exception) {
+} catch (mysqli_sql_exception $exception) {
     global $DEBUG;
     if ($exception->getCode() == 1062)
         exit(http_forbidden("duplicate username"));
