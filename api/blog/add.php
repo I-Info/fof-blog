@@ -2,7 +2,7 @@
 require_once "../functions.php";
 
 $uid = check_log_status();
-if (!$uid)
+if ($uid === false)
     die(http_unauthorized());
 
 $data = parse_json();

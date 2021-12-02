@@ -12,7 +12,7 @@ if (!(isset($data->username) && isset($data->passwd) && isset($data->email) && i
 
 
 $stat = check_log_status();
-if ($stat)
+if ($stat !== false)
     exit(http_found($stat));
 
 $name = $data->username;

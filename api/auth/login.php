@@ -11,12 +11,12 @@ if (!(isset($data->username) && isset($data->passwd))) {
 }
 
 $stat = check_log_status();
-if ($stat)
+if ($stat !== false)
     exit(http_found($stat));
 
 // administrator auth
 if ($data->username == $ADMIN['username'] && $data->passwd == $ADMIN['passwd']) {
-    $_SESSION['uid'] = "admin";
+    $_SESSION['uid'] = "0";
     exit(http_ok());
 } else {
     // basic user auth

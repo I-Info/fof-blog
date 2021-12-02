@@ -49,7 +49,7 @@ function http_ok(string $msg = "ok", array $data = null): bool|string
     }
 }
 
-function http_forbidden(string $msg = "fail"): bool|string
+function http_forbidden(string $msg = "forbidden"): bool|string
 {
     return json_encode(array(
         "code" => 403,
