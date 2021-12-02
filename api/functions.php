@@ -9,6 +9,14 @@ function http_bad_request(string $msg = "bad request"): bool|string
     ));
 }
 
+function http_not_found(string $msg = "not found"): bool|string
+{
+    return json_encode(array(
+        "code" => 404,
+        "msg" => $msg,
+    ));
+}
+
 function http_found(string $msg = "found"): bool|string
 {
     return json_encode(array(
