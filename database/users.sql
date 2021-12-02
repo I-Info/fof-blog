@@ -10,3 +10,4 @@ create table users
 	constraint users_name_uindex
 		unique (name)
 );
+
