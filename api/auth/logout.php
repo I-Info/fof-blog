@@ -4,7 +4,7 @@ debug();
 session_start();
 if (isset($_SESSION['uid'])) {
     session_destroy();
-    print status_ok();
+    print http_ok();
 } else {
-    print status_not_allowed();
+    print http_not_allowed();
 }

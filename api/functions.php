@@ -1,7 +1,7 @@
 <?php
 require_once "config.php";
 
-function status_bad_request(string $msg = "bad request"): bool|string
+function http_bad_request(string $msg = "bad request"): bool|string
 {
     return json_encode(array(
         "code" => 400,
@@ -9,7 +9,7 @@ function status_bad_request(string $msg = "bad request"): bool|string
     ));
 }
 
-function status_found(string $msg): bool|string
+function http_found(string $msg = "found"): bool|string
 {
     return json_encode(array(
         "code" => 302,
@@ -17,15 +17,31 @@ function status_found(string $msg): bool|string
     ));
 }
 
-function status_ok(string $msg = "ok"): bool|string
+function http_unauthorized(string $msg = "unauthorized"): bool|string
 {
     return json_encode(array(
-        "code" => 200,
+        "code" => 401,
         "msg" => $msg,
     ));
 }
 
-function status_forbidden(string $msg = "fail"): bool|string
+function http_ok(string $msg = "ok", array $data = null): bool|string
+{
+    if ($data) {
+        return json_encode(array(
+            "code" => 200,
+            "msg" => $msg,
+            "data" => $data,
+        ));
+    } else {
+        return json_encode(array(
+            "code" => 200,
+            "msg" => $msg,
+        ));
+    }
+}
+
+function http_forbidden(string $msg = "fail"): bool|string
 {
     return json_encode(array(
         "code" => 403,
@@ -33,7 +49,7 @@ function status_forbidden(string $msg = "fail"): bool|string
     ));
 }
 
-function status_not_allowed(string $msg = "not allowed"): bool|string
+function http_not_allowed(string $msg = "not allowed"): bool|string
 {
     return json_encode(array(
         "code" => 405,
@@ -41,7 +57,7 @@ function status_not_allowed(string $msg = "not allowed"): bool|string
     ));
 }
 
-function status_server_error(string $msg = "internal server error"): bool|string
+function http_server_error(string $msg = "internal server error"): bool|string
 {
     return json_encode(array(
         "code" => 500,
@@ -56,18 +72,21 @@ function debug()
         error_reporting(0);
 }
 
-function mysql_connect(): mysqli
+/**
+ * @return mysqli
+ */
+function db_connect(): mysqli
 {
     global $DATABASE;
     try {
         $conn = mysqli_connect($DATABASE['hostname'], $DATABASE['username'], $DATABASE['password'],
             $DATABASE['database'], $DATABASE['port']);
         if ($conn->error) {
-            die(status_server_error("database error"));
+            die(http_server_error("database error"));
         }
     } catch (Exception $exception) {
         global $DEBUG;
-        die(status_server_error($DEBUG ? $exception->getMessage() : "database error"));
+        die(http_server_error($DEBUG ? $exception->getMessage() : "database error"));
     }
     return $conn;
 }
@@ -75,4 +94,17 @@ function mysql_connect(): mysqli
 function parse_json()
 {
     return json_decode(file_get_contents("php://input"));
+}
+
+/**
+ * return uid when already logged in
+ * @return false|string
+ */
+function check_log_status(): false|string
+{
+    session_start();
+    if (isset($_SESSION['uid'])) {
+        return $_SESSION['uid'];
+    }
+    return false;
 }
