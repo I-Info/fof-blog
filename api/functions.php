@@ -3,6 +3,7 @@ require_once "config.php";
 
 function http_bad_request(string $msg = "bad request"): bool|string
 {
+    header('Content-type: application/json');
     return json_encode(array(
         "code" => 400,
         "msg" => $msg,
@@ -11,6 +12,7 @@ function http_bad_request(string $msg = "bad request"): bool|string
 
 function http_not_found(string $msg = "not found"): bool|string
 {
+    header('Content-type: application/json');
     return json_encode(array(
         "code" => 404,
         "msg" => $msg,
@@ -19,6 +21,7 @@ function http_not_found(string $msg = "not found"): bool|string
 
 function http_found(string $msg = "found"): bool|string
 {
+    header('Content-type: application/json');
     return json_encode(array(
         "code" => 302,
         "msg" => $msg,
@@ -27,6 +30,7 @@ function http_found(string $msg = "found"): bool|string
 
 function http_unauthorized(string $msg = "unauthorized"): bool|string
 {
+    header('Content-type: application/json');
     return json_encode(array(
         "code" => 401,
         "msg" => $msg,
@@ -35,6 +39,7 @@ function http_unauthorized(string $msg = "unauthorized"): bool|string
 
 function http_ok(string $msg = "ok", array $data = null): bool|string
 {
+    header('Content-type: application/json');
     if ($data) {
         return json_encode(array(
             "code" => 200,
@@ -51,6 +56,7 @@ function http_ok(string $msg = "ok", array $data = null): bool|string
 
 function http_forbidden(string $msg = "forbidden"): bool|string
 {
+    header('Content-type: application/json');
     return json_encode(array(
         "code" => 403,
         "msg" => $msg,
@@ -59,6 +65,7 @@ function http_forbidden(string $msg = "forbidden"): bool|string
 
 function http_not_allowed(string $msg = "not allowed"): bool|string
 {
+    header('Content-type: application/json');
     return json_encode(array(
         "code" => 405,
         "msg" => $msg,
@@ -67,6 +74,7 @@ function http_not_allowed(string $msg = "not allowed"): bool|string
 
 function http_server_error(string $msg = "internal server error"): bool|string
 {
+    header('Content-type: application/json');
     return json_encode(array(
         "code" => 500,
         "msg" => $msg,
