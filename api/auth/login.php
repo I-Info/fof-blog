@@ -21,7 +21,7 @@ if ($data->username == $ADMIN['username'] && $data->passwd == $ADMIN['passwd']) 
 } else {
     // basic user auth
     $conn = db_connect();
-    $stmt = $conn->prepare("SELECT `uid`, `passwd` FROM `users` WHERE `name` = ?");
+    $stmt = $conn->prepare("SELECT `id`, `passwd` FROM `users` WHERE `name` = ?");
     $stmt->bind_param("s", $name);
     $name = $data->username;
     $passwd = md5($data->passwd);
@@ -30,7 +30,7 @@ if ($data->username == $ADMIN['username'] && $data->passwd == $ADMIN['passwd']) 
     $result = $stmt->get_result();
     if ($result && $row = $result->fetch_assoc()) {
         if ($row['passwd'] === $passwd) {
-            $_SESSION['uid'] = $row['uid'];
+            $_SESSION['uid'] = $row['id'];
             exit(http_ok());
         }
     }

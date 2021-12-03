@@ -34,7 +34,7 @@ for ($i = 0; $i < 5; ++$i) {
         $stmt->execute();
 
         $stmt = $conn->prepare("UPDATE `blogs` SET `likes` = `likes` + 1 WHERE `id` = ? AND `update_time` = ?;");
-        $stmt->bind_param("ss", $id, $time);
+        $stmt->bind_param("is", $id, $time);
         $stmt->execute();
         if ($stmt->affected_rows > 0) {
             $conn->commit();

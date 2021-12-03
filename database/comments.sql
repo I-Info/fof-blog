@@ -5,6 +5,7 @@ create table comments
     content     varchar(250)                          not null,
     uid         int                                   not null,
     blog_id     int                                   not null,
+    likes       int       default 0                   not null,
     create_time timestamp default current_timestamp() not null,
     update_time timestamp default current_timestamp() not null on update current_timestamp()
 );

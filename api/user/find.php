@@ -13,7 +13,7 @@ if ($name === $ADMIN['username'])
     exit(http_ok("ok", array("uid" => 0)));
 
 $conn = db_connect();
-$stmt = $conn->prepare("SELECT `uid` FROM `users` WHERE `name` = ?;");
+$stmt = $conn->prepare("SELECT `id` FROM `users` WHERE `name` = ?;");
 if ($stmt === false)
     die(http_server_error());
 $stmt->bind_param("s", $name);
@@ -21,7 +21,7 @@ try {
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result && $result->num_rows > 0) {
-        exit(http_ok("ok", array("uid" => $result->fetch_assoc()['uid'])));
+        exit(http_ok("ok", array("uid" => $result->fetch_assoc()['id'])));
     }
     exit(http_not_found());
 } catch (mysqli_sql_exception $exception) {
