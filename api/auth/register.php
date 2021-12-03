@@ -23,6 +23,8 @@ $tel = $data->tel;
 // check name
 if (strlen($name) < 1 || strlen($name) > 15)
     die(http_bad_request("invalid username"));
+if ($name === $ADMIN['username'])
+    die(http_forbidden("duplicate username"));
 if (strlen($passwd) < 5 || strlen($passwd) > 25)
     die(http_bad_request("invalid password"));
 if (!filter_var($email, FILTER_VALIDATE_EMAIL))
