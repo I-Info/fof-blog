@@ -30,11 +30,14 @@ for ($i = 0; $i < 5; ++$i) {
         }
         $time = $result->fetch_assoc()['t'];
 
-        $stmt = $conn->prepare("INSERT INTO `followers` (`uid`, `follower_uid`) VALUES (?, ?);");
+        $stmt = $conn->prepare("DELETE FROM `followers` WHERE `uid` = ? AND `follower_uid` = ?;");
         $stmt->bind_param("ii", $id, $uid);
         $stmt->execute();
+        if ($stmt->affected_rows <= 0) {
+            exit(http_not_found());
+        }
 
-        $stmt = $conn->prepare("UPDATE `users` SET `followers` = `followers` + 1 WHERE `id` = ? AND `update_time` = ?;");
+        $stmt = $conn->prepare("UPDATE `users` SET `followers` = `followers` - 1 WHERE `id` = ? AND `update_time` = ?;");
         $stmt->bind_param("is", $id, $time);
         $stmt->execute();
         if ($stmt->affected_rows > 0) {
@@ -46,8 +49,6 @@ for ($i = 0; $i < 5; ++$i) {
     } catch (mysqli_sql_exception $exception) {
         $conn->rollback();
         global $DEBUG;
-        if ($exception->getCode() == 1062)
-            exit(http_forbidden("already followed"));
         exit(http_bad_request($DEBUG ? "c:" . $exception->getCode() . "m:" . $exception->getMessage() : "bad request"));
     }
 }
