@@ -17,9 +17,6 @@ $id = $data->uid; // the user to be followed
 $conn = db_connect();
 // positive lock
 for ($i = 0; $i < 5; ++$i) {
-    // mysql transaction
-    if ($conn->begin_transaction() == false)
-        die(http_server_error("transaction fail"));
     try {
         $stmt = $conn->prepare("SELECT `update_time` AS `t` FROM `users` WHERE `id` = ?;");
         $stmt->bind_param("i", $id);
@@ -29,6 +26,10 @@ for ($i = 0; $i < 5; ++$i) {
             die(http_not_found());
         }
         $time = $result->fetch_assoc()['t'];
+
+        // mysql transaction
+        if ($conn->begin_transaction() == false)
+            die(http_server_error("transaction fail"));
 
         $stmt = $conn->prepare("DELETE FROM `followers` WHERE `uid` = ? AND `follower_uid` = ?;");
         $stmt->bind_param("ii", $id, $uid);
