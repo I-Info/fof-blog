@@ -124,3 +124,29 @@ function check_log_status(): false|string
     }
     return false;
 }
+
+function query_prepared(mysqli $conn, $query, array $args): bool|mysqli_result|int|string
+{
+    error_reporting(0);
+    $stmt = $conn->prepare($query);
+    $params = [];
+    $types = array_reduce($args, function ($string, &$arg) use (&$params) {
+        $params[] = &$arg;
+        if (is_float($arg)) $string .= 'd';
+        elseif (is_integer($arg)) $string .= 'i';
+        elseif (is_string($arg)) $string .= 's';
+        else                        $string .= 'b';
+        return $string;
+    }, '');
+    array_unshift($params, $types);
+
+    call_user_func_array([$stmt, 'bind_param'], $params);
+
+    $result = $stmt->execute() ? ($stmt->get_result() ? $stmt->get_result() : $stmt->affected_rows) : false;
+
+    $stmt->close();
+    global $DEBUG;
+    error_reporting($DEBUG ? 4 : 0);
+    return $result;
+}
+
