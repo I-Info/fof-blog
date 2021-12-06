@@ -9,19 +9,19 @@ if ($uid === false)
 
 $data = parse_json();
 
-if (!isset($data->blog_id) || !is_numeric($data->blog_id))
+if (!isset($data->id) || !is_numeric($data->id))
     die(http_bad_request());
 
-$id = $data->blog_id;
+$id = $data->id;
 
 $conn = db_connect();
 
 try {
-    $stmt = $conn->prepare("INSERT INTO blog_likes (`uid`, `blog_id`) VALUES (?, ?);");
+    $stmt = $conn->prepare("INSERT INTO comment_likes (`uid`, `comment_id`) VALUES (?, ?);");
     $stmt->bind_param("ii", $uid, $id);
     $stmt->execute();
 
-    $stmt = $conn->prepare("UPDATE `blogs` SET `likes` = `likes` + 1 WHERE `id` = ?;");
+    $stmt = $conn->prepare("UPDATE `comments` SET `likes` = `likes` + 1 WHERE `id` = ?;");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     if ($stmt->affected_rows > 0) {

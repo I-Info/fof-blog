@@ -17,7 +17,7 @@ $id = $data->blog_id;
 $conn = db_connect();
 
 try {
-    $stmt = $conn->prepare("DELETE FROM `likes` WHERE `uid` = ? AND `blog_id` = ?;");
+    $stmt = $conn->prepare("DELETE FROM blog_likes WHERE `uid` = ? AND `blog_id` = ?;");
     $stmt->bind_param("ii", $uid, $id);
     $stmt->execute();
     if ($stmt->affected_rows <= 0) {
