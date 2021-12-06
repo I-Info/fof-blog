@@ -34,7 +34,7 @@ if (isset($data->blog_id)) {
     if (!is_numeric($data->uid))
         die(http_bad_request());
 
-    // Negative numbers represent current user
+    // negative numbers represent current user
     $uid = $data->uid >= 0 ? (int)$data->uid : $_SESSION['uid'];
 
     $conn = db_connect();
@@ -63,7 +63,7 @@ if (isset($data->blog_id)) {
     if ($result && $result->num_rows > 0) {
         $r = array();
         foreach ($result as $row)
-            array_push($r, $row);
+            $r[] = $row;
         exit(http_ok("ok", $r));
     } else {
         die(http_not_found());

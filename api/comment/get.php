@@ -64,6 +64,7 @@ if (isset($data->id)) {
     }
 
 } else {
+    // get current user's comments
     $conn = db_connect();
     $stmt = $conn->prepare("SELECT id, blog_id, content, likes, create_time, update_time FROM `comments` WHERE uid = ? ORDER BY `id` DESC LIMIT ? OFFSET ?;");
     if ($stmt === false)
