@@ -38,7 +38,7 @@ if (isset($data->blog_id)) {
     $uid = $data->uid >= 0 ? (int)$data->uid : $_SESSION['uid'];
 
     $conn = db_connect();
-    $stmt = $conn->prepare("SELECT * FROM `blogs` WHERE `uid` = ? ORDER BY `id` DESC LIMIT ? OFFSET ?;");
+    $stmt = $conn->prepare("SELECT id, content, likes, create_time, update_time FROM `blogs` WHERE `uid` = ? ORDER BY `id` DESC LIMIT ? OFFSET ?;");
     if ($stmt === false)
         die(http_server_error());
     $stmt->bind_param("iii", $uid, $limit, $page);
@@ -48,7 +48,7 @@ if (isset($data->blog_id)) {
     if ($result && $result->num_rows > 0) {
         $r = array();
         foreach ($result as $row)
-            array_push($r, $row);
+            $r[] = $row;
         exit(http_ok("ok", $r));
     } else {
         die(http_not_found());
