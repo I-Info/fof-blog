@@ -9,6 +9,7 @@ create table followers
             on update cascade on delete cascade,
     constraint followers_users_id_fk_2
         foreign key (follower_uid) references users (id)
+            on update cascade on delete cascade
 );
 
 create index followers_follower_uid_index
