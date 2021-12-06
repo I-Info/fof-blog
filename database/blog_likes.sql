@@ -1,4 +1,4 @@
-create table likes
+create table blog_likes
 (
     uid     int not null,
     blog_id int not null,
