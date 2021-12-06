@@ -14,7 +14,7 @@ if (!isset($data->uid) || !is_numeric($data->uid))
 
 $id = $data->uid; // the user to be followed
 if ($id == $uid)
-    die(http_bad_request("cannot follow yourself"));
+    die(http_forbidden("cannot follow yourself"));
 
 $conn = db_connect();
 
@@ -29,11 +29,13 @@ try {
     if ($stmt->affected_rows > 0) {
         exit(http_ok());
     }
-    exit(http_server_error());
+    exit(http_not_found());
 } catch (mysqli_sql_exception $exception) {
     global $DEBUG;
     if ($exception->getCode() == 1062)
         exit(http_forbidden("already followed"));
+    if ($exception->getCode() == 1452)
+        exit(http_not_found());
     exit(http_bad_request($DEBUG ? "c:" . $exception->getCode() . "m:" . $exception->getMessage() : "bad request"));
 }
 

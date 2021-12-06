@@ -30,9 +30,8 @@ try {
     if ($stmt->affected_rows) {
         exit(http_ok());
     }
-    die(http_server_error());
+    die(http_not_found());
 } catch (mysqli_sql_exception $exception) {
-    $conn->rollback();
     global $DEBUG;
     exit(http_bad_request($DEBUG ? "c:" . $exception->getCode() . "m:" . $exception->getMessage() : "bad request"));
 }
