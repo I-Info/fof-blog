@@ -3,10 +3,6 @@ require_once "../functions.php";
 
 debug();
 
-$uid = check_log_status();
-if ($uid === false)
-    die(http_unauthorized());
-
 $data = parse_json();
 
 // page and limit
@@ -35,7 +31,14 @@ if (isset($data->blog_id)) {
         die(http_bad_request());
 
     // negative numbers represent current user
-    $uid = $data->uid >= 0 ? (int)$data->uid : $_SESSION['uid'];
+    if ($data->uid >= 0) {
+        $uid = $data->uid;
+    } else {
+        $uid = check_log_status();
+        if ($uid === false)
+            die(http_unauthorized());
+
+    }
 
     $conn = db_connect();
     $stmt = $conn->prepare("SELECT id, content, likes, create_time, update_time FROM `blogs` WHERE `uid` = ? ORDER BY `id` DESC LIMIT ? OFFSET ?;");
