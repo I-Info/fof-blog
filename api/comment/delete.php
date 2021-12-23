@@ -17,7 +17,7 @@ if ($uid === "0") {
     $stmt = $conn->prepare("DELETE FROM `comments` WHERE id = ?;");
     if ($stmt === false)
         die(http_server_error());
-    $stmt->bind_param("i", $id, $uid);
+    $stmt->bind_param("i", $id);
 } else {
     $stmt = $conn->prepare("DELETE FROM `comments` WHERE id = ? AND uid = ?;");
     if ($stmt === false)
