@@ -24,7 +24,7 @@ if (isset($data->uid)) {
     if ($uid === false)
         die(http_unauthorized());
     if ($uid === "0") {
-        $stmt = $conn->prepare("SELECT name, followers, email, tel, create_time, update_time FROM users;");
+        $stmt = $conn->prepare("SELECT id, name, followers, email, tel, create_time, update_time FROM users;");
     } else {
         $stmt = $conn->prepare("SELECT name, followers, email, tel, create_time FROM users WHERE id = ?;");
     }
