@@ -9,7 +9,7 @@ if ($uid === false)
 
 $data = parse_json();
 
-if (!isset($data->content) || strlen($data->content) < 2 || strlen($data->content) > 1500)
+if (!isset($data->content) || strlen($data->content) < 1 || strlen($data->content) > 1500)
     exit(http_bad_request());
 
 $conn = db_connect();

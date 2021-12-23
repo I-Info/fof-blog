@@ -19,6 +19,7 @@ if (isset($data->uid)) {
     }
     $stmt->bind_param("i", $id);
     $id = $data->uid;
+    $stmt->execute();
     $result = $stmt->get_result();
     if ($result && $result->num_rows) {
         exit(http_ok("ok", $result->fetch_assoc()));

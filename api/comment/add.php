@@ -9,7 +9,7 @@ if ($uid === false)
 
 $data = parse_json();
 
-if (!isset($data->content) || strlen($data->content) < 2 || strlen($data->content) > 250)
+if (!isset($data->content) || strlen($data->content) < 1 || strlen($data->content) > 250)
     exit(http_bad_request());
 if (!isset($data->blog_id) || !is_numeric($data->blog_id))
     die(http_bad_request());
