@@ -9,7 +9,7 @@ if ($uid === false)
 
 $data = parse_json();
 
-if (!isset($data->blog_id) || empty($data->blog_id))
+if (!isset($data->blog_id) || !is_numeric($data->blog_id))
     die(http_bad_request());
 
 $conn = db_connect();
