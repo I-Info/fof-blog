@@ -23,7 +23,11 @@ if (isset($data->uid)) {
     // current user
     if ($uid === false)
         die(http_unauthorized());
-    $stmt = $conn->prepare("SELECT name, followers, email, tel, create_time FROM users WHERE id = ?;");
+    if ($uid === "0") {
+        $stmt = $conn->prepare("SELECT name, followers, email, tel, create_time, update_time FROM users;");
+    } else {
+        $stmt = $conn->prepare("SELECT name, followers, email, tel, create_time FROM users WHERE id = ?;");
+    }
     $stmt->bind_param("i", $uid);
 }
 $stmt->execute();
