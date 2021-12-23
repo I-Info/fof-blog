@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOF-注册</title>
+
+    <link rel="stylesheet" href="register.css">
+
+</head>
+<body>
+    <section>
+
+        <div class="container">
+            <div class="form">
+                <h2>FOF注册页面</h2>
+                    <div class="body">
+                        <table width="1000" height="300" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td align="right" class="long1">
+                                    <label for="username">&nbsp;用户名：</label>
+                                </td>
+                                <td class="long2">
+                                    <input type="text" id="username" name="username" class="inp" onfocus="usnTip()" onblur="testUsn()"/>
+                                </td>
+                                <td>
+                                    <p id="username_p"></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" class="long1">
+                                    <label for="passwd">&nbsp;密码：</label>
+                                </td>
+                                <td class="long2">
+                                    <input type="password" id="passwd" name="passwd" class="inp" onfocus="psdTip()" onblur="testPsd()"/>
+                                </td>
+                                <td>
+                                    <p id='passwd_p'></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" class="long1">
+                                    <label for="passwd_confirm">&nbsp;密码确认：</label>
+                                </td>
+                                <td class="long2">
+                                    <input type="password" id="passwd_confirm" class="inp" onfocus="confirmTip()" onblur="testConfirm()"/>
+                                </td>
+                                <td>
+                                    <p id="passwd_confirm_p"></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" class="long1">
+                                    <label for="email">&nbsp;邮箱：</label>
+                                </td>
+                                <td class="long2">
+                                    <input type="text" id="email" name="email" class="inp" onfocus="emailTip()" onblur="testEmail()"/>
+                                </td>
+                                <td>
+                                    <p id="email_p"></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" class="long1">
+                                    <label for="tel">&nbsp;手机：</label>
+                                </td>
+                                <td class="long2">
+                                    <input type="text" id="tel" name="tel" class="inp" onfocus="telTip()" onblur="testTel()"/>
+                                </td>
+                                <td>
+                                    <p id="tel_p"></p>
+                                </td>
+                            </tr>
+                        </table>
+                        <div>
+                            <p class="ret">已有账号？<a href="../login/login.html">
+                                直接登录！
+                            </a></p>
+                            <button class="butt bot inp" onclick="check()">立即注册</button>
+                            <button class="bot diff" onclick="clearInput()">重置</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="/statics/jquery-3.6.0.js"></script>
+    <script src="register.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOF-属于你的轻巧微博</title>
+
+    <link rel="stylesheet" href="userblog.css">
+
+    <script src="/statics/jquery-3.6.0.js"></script>
+    <script src="userblog.js"></script>
+
+</head>
+
+<body>
+
+
+<div class="header">
+    <ul>
+        <li class="index">FOF</li>
+        <li>
+            <button id="login" class="butt" onclick="login()">登录</button>
+        </li>
+        <li>
+            <button id="register" class="butt" onclick="register()">注册</button>
+        </li>
+        <li>
+            <div id="currentUser"></div>
+        </li>
+        <li>
+            <button class="exit" onclick="logout()">退出</button>
+        </li>
+    </ul>
+</div>
+
+<div class="body">
+    <div class="content">
+
+        <div class="container1">
+            <div class="navigate">
+                <ul>
+                    <li>&nbsp;&nbsp;&nbsp;<a href="../index/index.html">首页</a></li>
+                    <li>&nbsp;&nbsp;&nbsp;<a href="../userblog/userblog.html">我的微博</a></li>
+                    <li>&nbsp;&nbsp;&nbsp;<a href="../comment/comment.html">我的评论</a></li>
+                    <li>&nbsp;&nbsp;&nbsp;<a href="../attention/attention.html">我的关注</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="container2">
+            <p>我的微博</p>
+
+            <div id="blog">
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+</body>
+
+</html>
