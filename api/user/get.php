@@ -19,6 +19,10 @@ if (isset($data->uid)) {
     }
     $stmt->bind_param("i", $id);
     $id = $data->uid;
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows) {
+        exit(http_ok("ok", $result->fetch_assoc()));
+    }
 } else {
     // current user
     if ($uid === false)
@@ -41,6 +45,6 @@ if (isset($data->uid)) {
         if ($result && $result->num_rows) {
             exit(http_ok("ok", $result->fetch_assoc()));
         }
-        die(http_not_found());
     }
 }
+die(http_not_found());
