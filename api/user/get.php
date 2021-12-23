@@ -25,14 +25,22 @@ if (isset($data->uid)) {
         die(http_unauthorized());
     if ($uid === "0") {
         $stmt = $conn->prepare("SELECT id, name, followers, email, tel, create_time, update_time FROM users;");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result && $result->num_rows) {
+            $arr = array();
+            foreach ($result as $row)
+                $arr[] = $row;
+            exit(http_ok("ok", $arr));
+        }
     } else {
         $stmt = $conn->prepare("SELECT name, followers, email, tel, create_time FROM users WHERE id = ?;");
+        $stmt->bind_param("i", $uid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result && $result->num_rows) {
+            exit(http_ok("ok", $result->fetch_assoc()));
+        }
+        die(http_not_found());
     }
-    $stmt->bind_param("i", $uid);
 }
-$stmt->execute();
-$result = $stmt->get_result();
-if ($result && $result->num_rows) {
-    exit(http_ok("ok", $result->fetch_assoc()));
-}
-die(http_not_found());
