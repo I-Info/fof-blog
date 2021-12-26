@@ -13,7 +13,7 @@ function check() {
         }
     }
 
-    $.post("/fof-blog/api/auth/register.php", JSON.stringify(
+    $.post("/api/auth/register.php", JSON.stringify(
         {
             username: $('#username').val(),
             passwd: $('#passwd').val(),
@@ -62,7 +62,7 @@ function testUsn() {
         $("#username_p").attr("class", "err");
     }
     if (username.length >= 1 && username.length <= 15) {
-        $.post("/fof-blog/api/user/find.php", JSON.stringify({username: $('#username').val()}),
+        $.post("/api/user/find.php", JSON.stringify({username: $('#username').val()}),
         function (data) {
             if (data.msg == "ok") {
                 $("#username_p").html("该用户名已存在！");

@@ -12,14 +12,14 @@ var currentId = -1;
 function getCurrentId() {
     currentId = -1;
     $.post({
-        url: "/fof-blog/api/auth/login.php",
+        url: "/api/auth/login.php",
         async: false,
         data: JSON.stringify({username: "", passwd: ""}),
         success: function (data) {
             if (data.code == 302) {
                 currentId = data.msg;
                 $.post({
-                    url: "/fof-blog/api/user/get.php",
+                    url: "/api/user/get.php",
                     async: false,
                     data: JSON.stringify({uid: currentId}),
                     success: function (res) {
@@ -46,7 +46,7 @@ function register() {
 }
 
 function logout() {
-    $.post("/fof-blog/api/auth/logout.php",
+    $.post("/api/auth/logout.php",
         function (data) {
             if (data.msg == "ok") {
                 alert("您已成功退出！");
@@ -74,7 +74,7 @@ function getContent() {
     uid = -1;
     commId = -1;
     $.post({
-        url: "/fof-blog/api/blog/get.php",
+        url: "/api/blog/get.php",
         async: false,
         success: function (data) {
             if (data.msg == "ok") {
@@ -88,7 +88,7 @@ function getContent() {
 
                     var tipList = [];
                     $.post({
-                        url: "/fof-blog/api/comment/get.php",
+                        url: "/api/comment/get.php",
                         async: false,
                         data: JSON.stringify({blog_id: id}),
                         success: function (data) {
@@ -98,7 +98,7 @@ function getContent() {
                                 for (var i = 0; i < tipList.length; i++) {
                                     if (tipList[i].uid == currentId) {
                                         $.post({
-                                            url: "/fof-blog/api/user/get.php",
+                                            url: "/api/user/get.php",
                                             async: false,
                                             data: JSON.stringify({uid: uid}),
                                             success: function (res) {
@@ -117,7 +117,7 @@ function getContent() {
                                                     str = str + '<br>';
                                                     var commList = [];
                                                     $.post({
-                                                        url: "/fof-blog/api/comment/get.php",
+                                                        url: "/api/comment/get.php",
                                                         async: false,
                                                         data: JSON.stringify({blog_id: id}),
                                                         success: function (data) {
@@ -131,7 +131,7 @@ function getContent() {
                                                                     var content = commList[j].content;
                                                                     var createTime = commList[j].create_time;
                                                                     $.post({
-                                                                        url: "/fof-blog/api/user/get.php",
+                                                                        url: "/api/user/get.php",
                                                                         async: false,
                                                                         data: JSON.stringify({uid: uid}),
                                                                         success: function (res) {
@@ -185,7 +185,7 @@ function commentSend() {
         var comment = $(this).siblings(".commArea").val();
         var blogId = $(this).parents(".publish").siblings(".blogId").text();
         $.post({
-            url: "/fof-blog/api/comment/add.php",
+            url: "/api/comment/add.php",
             async: false,
             data: JSON.stringify({
                 content: comment,
@@ -211,7 +211,7 @@ function deleteComm() {
         // alert("确认删除这条评论？");
         var commId = $(this).parents(".commUser").prev().prev().text();
         $.post({
-            url: "/fof-blog/api/comment/delete.php",
+            url: "/api/comment/delete.php",
             async: false,
             data: JSON.stringify({id: commId}),
             success: function (data) {

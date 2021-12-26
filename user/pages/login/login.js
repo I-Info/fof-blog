@@ -1,6 +1,6 @@
 function check() {
     if ($('#username').val()=="admin"&&$('#passwd').val()=="password"){
-        $.post("/fof-blog/api/auth/login.php", JSON.stringify({username: $('#username').val(), passwd: $('#passwd').val()}),
+        $.post("/api/auth/login.php", JSON.stringify({username: $('#username').val(), passwd: $('#passwd').val()}),
             function (data) {
                 if (data.msg == "ok") {
                     location.href="../../../admin/pages/users/users.html";
@@ -10,7 +10,7 @@ function check() {
                 ;
             });
     }else {
-        $.post("/fof-blog/api/auth/login.php", JSON.stringify({username: $('#username').val(), passwd: $('#passwd').val()}),
+        $.post("/api/auth/login.php", JSON.stringify({username: $('#username').val(), passwd: $('#passwd').val()}),
             function (data) {
                 if (data.msg == "ok") {
                     location.href = "../index/index.html";

@@ -7,7 +7,7 @@ $(document).ready(function () {
 })
 
 function logout() {
-    $.post("/fof-blog/api/auth/logout.php",
+    $.post("/api/auth/logout.php",
         function (data) {
             if (data.msg == "ok") {
                 alert("您已成功退出！");
@@ -28,7 +28,7 @@ function getUsers() {
     var str = "";
     var uid = -1;
     $.post({
-        url: "/fof-blog/api/user/get.php",
+        url: "/api/user/get.php",
         async: false,
         success: function (data) {
             if (data.msg == "ok") {
@@ -50,7 +50,7 @@ function deleteUser() {
         alert("确认删除这个用户？");
         var userId = $(this).parents(".user").next().text();
         $.post({
-            url: "/fof-blog/api/user/delete.php",
+            url: "/api/user/delete.php",
             async: false,
             data: JSON.stringify({uid: userId}),
             success: function (data) {

@@ -14,14 +14,14 @@ var currentId = -1;
 function getCurrentId() {
     currentId = -1;
     $.post({
-        url: "/fof-blog/api/auth/login.php",
+        url: "/api/auth/login.php",
         async: false,
         data: JSON.stringify({username: "", passwd: ""}),
         success: function (data) {
             if (data.code == 302) {
                 currentId = data.msg;
                 $.post({
-                    url: "/fof-blog/api/user/get.php",
+                    url: "/api/user/get.php",
                     async: false,
                     data: JSON.stringify({uid: currentId}),
                     success: function (res) {
@@ -48,7 +48,7 @@ function register() {
 }
 
 function logout() {
-    $.post("/fof-blog/api/auth/logout.php",
+    $.post("/api/auth/logout.php",
         function (data) {
             if (data.msg == "ok") {
                 alert("您已成功退出！");
@@ -83,7 +83,7 @@ function getContent() {
     uid = -1;
     if (currentId == -1) {
         $.post({
-            url: "/fof-blog/api/blog/get.php",
+            url: "/api/blog/get.php",
             async: false,
             success: function (data) {
                 if (data.msg == "ok") {
@@ -95,13 +95,13 @@ function getContent() {
                         var content = list[i].content;
                         var createTime = list[i].create_time;
                         $.post({
-                            url: "/fof-blog/api/user/get.php",
+                            url: "/api/user/get.php",
                             async: false,
                             data: JSON.stringify({uid: uid}),
                             success: function (res) {
                                 if (res.msg == "ok") {
                                     $.post({
-                                        url: "/fof-blog/api/user/follows.php",
+                                        url: "/api/user/follows.php",
                                         async: false,
                                         data: JSON.stringify({uid: currentId}),
                                         success: function (data) {
@@ -170,7 +170,7 @@ function getContent() {
         });
     } else {
         $.post({
-            url: "/fof-blog/api/blog/get.php",
+            url: "/api/blog/get.php",
             async: false,
             success: function (data) {
                 if (data.msg == "ok") {
@@ -182,7 +182,7 @@ function getContent() {
                         var content = list[i].content;
                         var createTime = list[i].create_time;
                         $.post({
-                            url: "/fof-blog/api/user/get.php",
+                            url: "/api/user/get.php",
                             async: false,
                             data: JSON.stringify({uid: uid}),
                             success: function (res) {
@@ -200,7 +200,7 @@ function getContent() {
                                         str = str + '</div>' + '<br>';
                                     } else {
                                         $.post({
-                                            url: "/fof-blog/api/user/follows.php",
+                                            url: "/api/user/follows.php",
                                             async: false,
                                             data: JSON.stringify({uid: currentId}),
                                             success: function (data) {
@@ -291,7 +291,7 @@ function comment() {
             var list = [];
             var commDetail = "";
             $.post({
-                url: "/fof-blog/api/comment/get.php",
+                url: "/api/comment/get.php",
                 async: false,
                 data: JSON.stringify({blog_id: blogId}),
                 success: function (data) {
@@ -304,7 +304,7 @@ function comment() {
                             var content = list[i].content;
                             var createTime = list[i].create_time;
                             $.post({
-                                url: "/fof-blog/api/user/get.php",
+                                url: "/api/user/get.php",
                                 async: false,
                                 data: JSON.stringify({uid: uid}),
                                 success: function (res) {
@@ -332,7 +332,7 @@ function comment() {
 
 function send() {
     $(".send").click(function () {
-        $.post("/fof-blog/api/blog/add.php", JSON.stringify({content: $('#area').val()}),
+        $.post("/api/blog/add.php", JSON.stringify({content: $('#area').val()}),
             function (data) {
                 if (data.msg == "ok") {
                     alert("您已成功发表！");
@@ -355,7 +355,7 @@ function follow() {
     $(".followButt").click(function () {
         var userId = $(this).siblings(".userId").text();
         $.post({
-            url: "/fof-blog/api/user/follow.php",
+            url: "/api/user/follow.php",
             async: false,
             data: JSON.stringify({uid: userId}),
             success: function (data) {
@@ -376,7 +376,7 @@ function commentSend() {
         var comment = $(this).siblings(".commArea").val();
         var blogId = $(this).parents(".commCon").siblings(".blogId").text();
         $.post({
-            url: "/fof-blog/api/comment/add.php",
+            url: "/api/comment/add.php",
             async: false,
             data: JSON.stringify({
                 content: comment,
@@ -396,7 +396,7 @@ function commentSend() {
         var list = [];
         var commDetail = "";
         $.post({
-            url: "/fof-blog/api/comment/get.php",
+            url: "/api/comment/get.php",
             async: false,
             data: JSON.stringify({blog_id: blogId}),
             success: function (data) {
@@ -409,7 +409,7 @@ function commentSend() {
                         var content = list[i].content;
                         var createTime = list[i].create_time;
                         $.post({
-                            url: "/fof-blog/api/user/get.php",
+                            url: "/api/user/get.php",
                             async: false,
                             data: JSON.stringify({uid: uid}),
                             success: function (res) {

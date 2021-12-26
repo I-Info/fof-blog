@@ -15,7 +15,7 @@ function register() {
 }
 
 function logout() {
-    $.post("/fof-blog/api/auth/logout.php",
+    $.post("/api/auth/logout.php",
         function (data) {
             if (data.msg == "ok") {
                 alert("您已成功退出！");
@@ -49,7 +49,7 @@ function getBlogs() {
     id = -1;
     uid = -1;
     $.post({
-        url: "/fof-blog/api/blog/get.php",
+        url: "/api/blog/get.php",
         async: false,
         success: function (data) {
             if (data.msg == "ok") {
@@ -61,7 +61,7 @@ function getBlogs() {
                     var content = list[i].content;
                     var createTime = list[i].create_time;
                     $.post({
-                        url: "/fof-blog/api/user/get.php",
+                        url: "/api/user/get.php",
                         async: false,
                         data: JSON.stringify({uid: uid}),
                         success: function (res) {
@@ -97,7 +97,7 @@ function deleteBlog() {
         var blogId = $(this).parents(".user").siblings(".blogId").text();
         console.log(blogId);
         $.post({
-            url: "/fof-blog/api/blog/delete.php",
+            url: "/api/blog/delete.php",
             async: false,
             data: JSON.stringify({blog_id: blogId}),
             success: function (data) {
